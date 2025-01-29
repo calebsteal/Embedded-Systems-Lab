@@ -65,17 +65,26 @@ void BOARD_InitPins(void)
     CLOCK_EnableClock(kCLOCK_PortA);
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
+
     gpio_pin_config_t LEDRGB_RED_config = {
     		.pinDirection = kGPIO_DigitalOutput,
-			.outputLogic = 0U
+		.outputLogic = 0U
     };
 
-    /* Initialize GPIO functionality on PTA1 (pin 23) */
+    gpio_pin_config_t LEDRGB_BLUE_config = {
+		.pinDirection = kGPIO_DigitalOutput,
+		.outputLogic = 0U
+    }; 
+
+    /* Port D Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+	
+    /* Initialize GPIO functionality on PTA1 (pin 23) and PTD5 (FIXME: Add pin number here) */
     GPIO_PinInit(GPIOA, 1, &LEDRGB_RED_config);
+    GPIO_PinInit(GPIOD, 1, &LEDRGB_BLUE_config);
 
     /* PORTA1 (pin 23) is configured as PTA1 */
     PORT_SetPinMux(PORTA, 1, kPORT_MuxAsGPIO);
-
 
     /* PORTA2 (pin 24) is configured as TRACE_SWO */
     PORT_SetPinMux(BOARD_LEDRGB_GREEN_PORT, BOARD_LEDRGB_GREEN_PIN, kPORT_MuxAlt7);
