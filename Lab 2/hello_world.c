@@ -31,6 +31,8 @@
 int main(void)
 {
     char ch;
+    char instring[20];
+    int i = 0;
 
     /* Init board hardware. */
     BOARD_InitBootPins();
