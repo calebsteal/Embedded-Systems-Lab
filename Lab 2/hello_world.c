@@ -45,6 +45,16 @@ int main(void)
     {
         ch = GETCHAR();
         PUTCHAR(ch);
-        GPIO_PortToggle(GPIOA, 1u << 1);
+        while ((ch != '\n' && (i<20)) 
+        {
+            instring[i++] == ch;
+            GPIO_PortToggle(GPIOA, 1u << 1);
+            ch = GETCHAR();
+        }
+    instring[i] = 0;
+
+    i = 0;
+    while (instring[i] != 0){
+        PUTCHAR(instring[i++]); 
     }
 }
