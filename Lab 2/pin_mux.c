@@ -81,10 +81,11 @@ void BOARD_InitPins(void)
 	
     /* Initialize GPIO functionality on PTA1 (pin 23) and PTD5 (FIXME: Add pin number here) */
     GPIO_PinInit(GPIOA, 1, &LEDRGB_RED_config);
-    GPIO_PinInit(GPIOD, 1, &LEDRGB_BLUE_config);
+    GPIO_PinInit(GPIOD, 5, &LEDRGB_BLUE_config);
 
-    /* PORTA1 (pin 23) is configured as PTA1 */
+    /* PORTA1 (pin 23) is configured as PTA1 and PORTD5 is configured as PTD5 */
     PORT_SetPinMux(PORTA, 1, kPORT_MuxAsGPIO);
+    PORT_SetPinMux(PORTD, 5, kPORT_MuxAsGPIO);
 
     /* PORTA2 (pin 24) is configured as TRACE_SWO */
     PORT_SetPinMux(BOARD_LEDRGB_GREEN_PORT, BOARD_LEDRGB_GREEN_PIN, kPORT_MuxAlt7);
