@@ -30,31 +30,49 @@
  */
 int main(void)
 {
-    char ch;
-    char instring[20];
-    int i = 0;
+	char ch;
+	char instring[20];
+	int i = 0;
 
-    /* Init board hardware. */
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+	/* Init board hardware. */
+	BOARD_InitBootPins();
+	BOARD_InitBootClocks();
+	BOARD_InitDebugConsole();
 
-    PRINTF("hello world.\r\n");
+	PRINTF("hello world.\r\n");
 
-    while (1)
-    {
-        ch = GETCHAR();
-        PUTCHAR(ch);
-        while ((ch != '\n' && (i<20)) 
-        {
-            instring[i++] == ch;
-            GPIO_PortToggle(GPIOA, 1u << 1);
-            ch = GETCHAR();
-        }
-    instring[i] = 0;
+	while (1)
+	{
+		i=0;
+	    while (1==1)
+	    {
+	    	ch = GETCHAR();
+	    	instring[i++] = ch;
+	    	while ((ch != '\n') && (i<20))
+	    	{
+	    		ch = GETCHAR();
+	    		instring[i++] = ch;
+	    		GPIO_PortToggle(GPIOA, 1u << 1);
+	    	}
 
-    i = 0;
-    while (instring[i] != 0){
-        PUTCHAR(instring[i++]); 
-    }
+	    	instring[i] = 0;
+	    	i = 0;
+
+	    	while (instring[i] != 0){
+	    		PUTCHAR(instring[i++]);
+	    	}
+
+	    	switch (instring[0]){
+	    	case 'a':
+	    	PRINTF("\rCommand 'a' detected\n\r");
+	    	GPIO_PortToggle(GPIOD, 1u << 5);
+	    	break;
+
+	    	default:
+	    		PRINTF("\rUnrecognized command\n\r");
+	    		break;
+	    	} // end case
+	    	i = 0;
+	    }
+	}
 }
