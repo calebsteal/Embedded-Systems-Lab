@@ -63,19 +63,46 @@ void BOARD_InitPins(void)
 {
     /* Port A Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Port D Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
+
     gpio_pin_config_t LEDRGB_RED_config = {
     		.pinDirection = kGPIO_DigitalOutput,
-			.outputLogic = 0U
+		.outputLogic = 0U
     };
 
-    /* Initialize GPIO functionality on PTA1 (pin 23) */
+    gpio_pin_config_t LEDRGB_BLUE_config = {
+		.pinDirection = kGPIO_DigitalOutput,
+		.outputLogic = 0U
+    }; 
+
+    const port_pin_config_t SW2 = {
+    		kPORT_PullUp,				// Internal pull-up resistor is enabled
+			kPORT_FastSlewRate,			// Fast Slew Rate is enabled
+			kPORT_PassiveFilterDisable,	// Passive filter is disabled
+			kPORT_OpenDrainDisable,		// Open Drain is disabled
+			kPORT_LowDriveStrength,		// Low drive strength is configured
+			kPORT_MuxAsGpio,			// Pin is configured as PTC1
+			kPORT_UnlockRegister,		// Pin Control Register fields [15:0] are not locked
+    };
+
+    // PORTC1 (pin 44) is configured as PTC1
+    PORT_SetPinConfig(PORTC, 1U, &SW2);
+    PORT_SetPinInterruptConfig(PORTC, 1u, kPORT_InterruptFallingEdge);
+	
+    /* Initialize GPIO functionality on PTA1 (pin 23) and PTD5 (FIXME: Add pin number here) */
     GPIO_PinInit(GPIOA, 1, &LEDRGB_RED_config);
+    GPIO_PinInit(GPIOD, 5, &LEDRGB_BLUE_config);
 
-    /* PORTA1 (pin 23) is configured as PTA1 */
-    PORT_SetPinMux(PORTA, 1, kPORT_MuxAsGPIO);
-
+    /* PORTA1 (pin 23) is configured as PTA1 and PORTD5 is configured as PTD5 */
+    PORT_SetPinMux(PORTA, 1, kPORT_MuxAsGpio);
+    PORT_SetPinMux(PORTD, 5, kPORT_MuxAsGpio);
 
     /* PORTA2 (pin 24) is configured as TRACE_SWO */
     PORT_SetPinMux(BOARD_LEDRGB_GREEN_PORT, BOARD_LEDRGB_GREEN_PIN, kPORT_MuxAlt7);
