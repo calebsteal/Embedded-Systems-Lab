@@ -78,11 +78,6 @@ void BOARD_InitPins(void)
         /* PORTA1 (pin 23) is configured as PTA1 */
     PORT_SetPinMux(PORTA, 1, kPORT_MuxAsGpio);
 
-
-
-
-
-
     /* PORTA2 (pin 24) is configured as TRACE_SWO */
     PORT_SetPinMux(BOARD_LEDRGB_GREEN_PORT, BOARD_LEDRGB_GREEN_PIN, kPORT_MuxAlt7);
 
