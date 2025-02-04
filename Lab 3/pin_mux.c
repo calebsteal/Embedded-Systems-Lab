@@ -84,11 +84,11 @@ void BOARD_InitPins(void)
 
     const port_pin_config_t SW2 = {
     		kPORT_PullUp,				// Internal pull-up resistor is enabled
-			kPORT_FastSlewRate,			// Fast Slew Rate is enabled
+			kPORT_FastSlewRate,		// Fast Slew Rate is enabled
 			kPORT_PassiveFilterDisable,	// Passive filter is disabled
 			kPORT_OpenDrainDisable,		// Open Drain is disabled
 			kPORT_LowDriveStrength,		// Low drive strength is configured
-			kPORT_MuxAsGpio,			// Pin is configured as PTC1
+			kPORT_MuxAsGpio,		// Pin is configured as PTC1
 			kPORT_UnlockRegister,		// Pin Control Register fields [15:0] are not locked
     };
 
