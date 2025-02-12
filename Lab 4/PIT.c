@@ -9,6 +9,7 @@
 #include "fsl_debug_console.h"
 #include "fsl_common.h"
 #include "fsl_pit.h"
+#include "fsl_gpio.h"
 
 #include "clock_config.h"
 
@@ -30,6 +31,7 @@ void PIT0_IRQHandler(void) //Note the "magic name".  This will override the defa
     /* Clear interrupt flag.*/
 	PIT_ClearStatusFlags(PIT, kPIT_Chnl_0, PIT_TFLG_TIF_MASK);
 	PRINTF("\r\n PIT_HANDLER - Channel No.0 interrupt has occurred ! %d\r\n",report_counter++);
+	GPIO_PortToggle(GPIOA, 1u << 1);
 
 
 }
