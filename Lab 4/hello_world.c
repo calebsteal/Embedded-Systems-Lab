@@ -95,4 +95,5 @@ int i = 0;
 void PORTC_IRQHandler(void){
 	PRINTF("Why is Dr. Russ always out of town :(\n");
 	PORT_ClearPinsInterruptFlags(PORTC, (1U << 1));
+	GPIO_PortToggle(GPIOD, 1U << 5);
 }
