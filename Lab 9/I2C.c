@@ -95,6 +95,8 @@ void I2C_Init(void)
 		// Put accelerometer in standby
 		SendData[0] = 0x00;
 		i = I2C_Write(I2C0, FXOS8700_ADDRESS,FXOS8700_REGISTER_CTRL_REG1,1,1,SendData);
+
+		// Send mag reset to magnetometer
 		SendData[0] = 0x40;
 		i = I2C_Write(I2C0, FXOS8700_ADDRESS, FXOS8700_REGISTER_MCTRL_REG1,1,1,SendData);
 		delay(100000);
@@ -130,7 +132,7 @@ int ReadSensorsOnce(int16_t *Results){
     int i;
 
     i = I2C_Read(I2C0, FXOS8700_ADDRESS,FXOS8700_REGISTER_STATUS,7,1,ReceiveData);
-    PRINTF("Read from accel: %d \r\n",i);
+    // PRINTF("Read from accel: %d \r\n",i);
 
     if (i==0){
         PRINTF("Status: %02x",ReceiveData[0]);
@@ -144,7 +146,7 @@ int ReadSensorsOnce(int16_t *Results){
     } else {
         PRINTF("Did not read!\r\n");
     }
-
+    return i;
 }
 
 int ReadMagOnce(int16_t *Results){
@@ -152,7 +154,7 @@ int ReadMagOnce(int16_t *Results){
     int i;
 
     i = I2C_Read(I2C0, FXOS8700_ADDRESS,FXOS8700_REGISTER_MSTATUS,7,1,ReceiveData);
-    PRINTF("Read from accel: %d \r\n",i);
+    // PRINTF("Read from magnetometer: %d \r\n",i);
 
     if (i==0){
         PRINTF("Status: %02x",ReceiveData[0]);
@@ -166,5 +168,20 @@ int ReadMagOnce(int16_t *Results){
     } else {
         PRINTF("Did not read!\r\n");
     }
+    return i;
+}
 
+int ReadTemp(void) {
+	int i;
+	 i = I2C_Read(I2C0, FXOS8700_ADDRESS,FXOS8700_REGISTER_TEMPERATURE,1,1,ReceiveData);
+	 // PRINTF("Read from temperature sensor: %d \r\n", i);
+
+	 if (i==0) {
+		 PRINTF("Temp: %02x ",ReceiveData[0]);
+		 PRINTF("\r\n");
+		 return ReceiveData[0];
+	 } else {
+		 PRINTF("ERROR:");
+		 return -128;
+	 }
 }
